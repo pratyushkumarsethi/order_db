@@ -35,14 +35,22 @@ INSERT INTO SALESMAN VALUES
 (102, 'Sandib Jena', 'baleswar', 0.13),
 (103, 'Swaraj Satapathy', 'rourkela', 0.12),
 (104, 'Biswa Ranjan', 'jagatsinghpur', 0.14),
-(105, 'Ram krushna', 'Jajpur', 0.11);
+(105, 'Ram krushna', 'Jajpur', 0.11),
+(106, 'Biswajit Pradhan', 'Sambalpur', 0.10);
+
 
 INSERT INTO CUSTOMER VALUES
 (201, 'Pratyush Sethi', 'Jajpur', 100, 101),
 (202, 'Subham Mohanty', 'Baleswar', 200, 102),
 (203, 'Satyajit Behera', 'Rourkela', 150, 103),
 (204, 'Debasis Nayak', 'Jagatsinghpur', 300, 104),
-(205, 'Manas Ranjan', 'Jajpur', 250, 105);
+(205, 'Manas Ranjan', 'Jajpur', 250, 105),
+(206, 'Rakesh Rout', 'Baleswar', 180, 102),
+(207, 'Ankit Mishra', 'Rourkela', 220, 103),
+(208, 'Sourav Panda', 'Jajpur', 140, 101),
+(209, 'Chinmay Das', 'Jagatsinghpur', 260, 104),
+(210, 'Biswajit Sahoo', 'Jajpur', 300, 105),
+(211, 'Dilip Mahapatra', 'Brahampur', 300, 106);
 
 INSERT INTO ORDERS VALUES
 (301, 2500.50, '2026-01-10', 201, 101),
@@ -50,3 +58,18 @@ INSERT INTO ORDERS VALUES
 (303, 3200.00, '2026-01-15', 203, 103),
 (304, 1500.25, '2026-01-18', 204, 104),
 (305, 4100.90, '2026-01-20', 205, 105);
+
+-- 1.count the customers with grade above Jajpur's average
+SELECT COUNT(*)
+FROM CUSTOMER
+WHERE GRADE > (
+SELECT AVG(GRADE)
+FROM CUSTOMER
+WHERE CITY = 'Jajpur'
+);
+
+-- find the name and numbers of all salesman who had more than one customer.
+SELECT SALESMAN_ID, COUNT(CUSTOMER_ID) AS TOTAL_CUSTOMERS
+FROM CUSTOMER
+GROUP BY SALESMAN_ID
+HAVING COUNT(CUSTOMER_ID) > 1;
